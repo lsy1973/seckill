@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * </p>
  *
  * @author linksy
- * @since 2022-07-22
+ * @since 2022-07-23
  */
 @Controller
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/order")
+public class OrderController {
 
 }

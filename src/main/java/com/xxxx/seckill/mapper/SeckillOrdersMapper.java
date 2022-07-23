@@ -1,7 +1,7 @@
 package com.xxxx.seckill.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.xxxx.seckill.pojo.User;
+import com.xxxx.seckill.pojo.SeckillOrders;
 
 /**
  * <p>
@@ -9,8 +9,8 @@ import com.xxxx.seckill.pojo.User;
  * </p>
  *
  * @author linksy
- * @since 2022-07-22
+ * @since 2022-07-23
  */
-public interface UserMapper extends BaseMapper<User> {
+public interface SeckillOrdersMapper extends BaseMapper<SeckillOrders> {
 
 }

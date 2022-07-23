@@ -1,22 +1,54 @@
 server:
-    port: 8080
+  port: 8080
 spring:
-    application:
-        name: seckill-demo
-    datasource:
-        driver-class-name: com.mysql.cj.jdbc.Driver
-        name: defaultDataSource
-        password: '***'
-        url: jdbc:mysql://localhost:3306/blue?serverTimezone=UTC
-        username: '***'
-    thymeleaf:
-        cache: true
-        check-template: true
-        check-template-location: true
-        content-type: text/html
-        enabled: true
-        encoding: UTF-8
-        excluded-view-names: ''
-        mode: HTML5
-        prefix: classpath:/templates/
-        suffix: .html
+  application:
+    name: seckill-demo
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    name: defaultDataSource
+    password: root
+    url: jdbc:mysql://localhost:3306/seckill?userUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    hikari:
+      pool-name: DateHikariCP
+      minimum-idle: 5
+      idle-timeout: 180000
+      maximum-pool-size: 10
+      auto-commit: true
+      max-lifetime: 180000
+      connection-test-query: SELECT 1
+  thymeleaf:
+    cache: false
+  #        check-template: true
+  #        check-template-location: true
+  #        content-type: text/html
+  #        enabled: true
+  #        encoding: UTF-8
+  #        excluded-view-names: ''
+  #        mode: HTML5
+  #        prefix: classpath:/templates/
+  #        suffix: .html
+  redis:
+    host: 124.220.207.187
+    port: 6379
+    database: 0
+    password: Lsy1234567
+    #超时时间
+    timeout: 10000ms
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: 10000ms
+        max-idle: 200
+        min-idle: 5
+
+
+
+
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/*Mapper.xml
+  type-aliases-package: com.xxxx.seckill.pojo
+logging:
+  level:
+    com.xxxx.seckill.mapper: debug
