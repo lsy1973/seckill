@@ -62,6 +62,7 @@ log.info(mobile);
 //            return RespBean.error(RespBeanEnum.LOGIN_ERROR);
         }
         String ticket = UUIDUtil.uuid();
+        System.out.println(ticket);
 //        request.getSession().setAttribute(ticket,user);
         //把用户数据存入redis,key="user:"+ticket,value=user
         redisTemplate.opsForValue().set("user:"+ticket,user);

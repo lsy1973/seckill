@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
-<!--&lt;!&ndash; 引入样式 &ndash;&gt;-->
-<!--<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">-->
-<!--&lt;!&ndash; 引入组件库 &ndash;&gt;-->
-<!--<script src="https://unpkg.com/element-ui/lib/index.js"></script>-->
 <head>
     <meta charset="UTF-8">
     <title>商品列表</title>
@@ -19,34 +15,23 @@
     <script type="text/javascript" th:src="@{/layer/layer.js}"></script>
     <!-- common.js -->
     <script type="text/javascript" th:src="@{/js/common.js}"></script>
+    <style>
+        body {
+            background-color: linen;
+        }
 
+        .panel-heading{
+            color: #2aabd2;
+        }
+        table, th, td {
+            border: 1px solid black;
+            background-color: #d5c6b8;
+        }
+        tr:hover {background-color: #f5f5f5;}
+    </style>
 </head>
 <body>
-<!--<div class="panel panel-default">-->
 <div>
-
-<!--    <el-table-->
-<!--            :data="tableData"-->
-<!--            stripe-->
-<!--            style="width: 100%">-->
-<!--        <el-table-column-->
-<!--                prop="date"-->
-<!--                label="日期"-->
-<!--                width="180">-->
-<!--        </el-table-column>-->
-<!--        <el-table-column-->
-<!--                prop="name"-->
-<!--                label="姓名"-->
-<!--                width="180">-->
-<!--        </el-table-column>-->
-<!--        <el-table-column-->
-<!--                prop="address"-->
-<!--                label="地址">-->
-<!--        </el-table-column>-->
-<!--    </el-table>-->
-
-
-
     <div class="panel-heading">秒杀商品列表</div>
     <table class="table" id="goodslist">
         <tr>
@@ -70,30 +55,5 @@
 </div>
 </body>
 </html>
-<!--<script>-->
-<!--    export default {-->
-<!--        data() {-->
-<!--            return {-->
-<!--                tableData: [{-->
-<!--                    date: '2016-05-02',-->
-<!--                    name: '王小虎',-->
-<!--                    address: '上海市普陀区金沙江路 1518 弄'-->
-<!--                }, {-->
-<!--                    date: '2016-05-04',-->
-<!--                    name: '王小虎',-->
-<!--                    address: '上海市普陀区金沙江路 1517 弄'-->
-<!--                }, {-->
-<!--                    date: '2016-05-01',-->
-<!--                    name: '王小虎',-->
-<!--                    address: '上海市普陀区金沙江路 1519 弄'-->
-<!--                }, {-->
-<!--                    date: '2016-05-03',-->
-<!--                    name: '王小虎',-->
-<!--                    address: '上海市普陀区金沙江路 1516 弄'-->
-<!--                }]-->
-<!--            }-->
-<!--        }-->
-<!--    }-->
-<!--</script>-->
 
 

@@ -23,8 +23,8 @@ import java.util.Date;
 @Controller
 @RequestMapping("/goods")
 public class GoodsController {
-    @Autowired
-    private IUserService userService;
+//    @Autowired
+//    private IUserService userService;
     @Autowired
     private IGoodsService goodsService;
 
@@ -33,6 +33,7 @@ public class GoodsController {
 //    public String toLogin(HttpServletRequest request, HttpServletResponse response, Model model, @CookieValue("userTicket") String ticket){
     @RequestMapping("/toList")
     public String toList(Model model,User user){
+//        model.addAttribute("user", user);
 //        if(StringUtils.isEmpty(ticket)){
 //            return "login";
 //        }
@@ -50,6 +51,7 @@ public class GoodsController {
     @RequestMapping("/toDetail/{goodsId}")
     public String toDetail(Model model, User user, @PathVariable Long goodsId) {
         model.addAttribute("user", user);
+        System.out.println("传入进来toDetail的user为:"+user);
         GoodsVo goods = goodsService.findGoodsVoByGoodsId(goodsId);
         model.addAttribute("goods", goods);
         Date startDate = goods.getStartDate();
