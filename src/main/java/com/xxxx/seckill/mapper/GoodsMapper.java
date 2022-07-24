@@ -16,5 +16,5 @@ import java.util.List;
  */
 public interface GoodsMapper extends BaseMapper<Goods> {
     List<GoodsVo> findGoodsVo();
-
+    GoodsVo findGoodsVoByGoodsId(Long goodsId);
 }
