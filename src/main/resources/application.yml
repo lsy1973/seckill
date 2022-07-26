@@ -1,12 +1,35 @@
 server:
   port: 8080
 spring:
+  kafka:
+    listener:
+      ack-mode: manual_immediate
+      concurrency: 5
+      poll-timeout: 5000
+      missing-topics-fatal: false
+    bootstrap-servers: 124.220.207.187:2128
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-serializer: org.apache.kafka.common.serialization.StringDeserializer
+      batch-size: 16384
+      buffer-memory: 33554432
+      retries: 1
+  resources:
+    add-mappings: true
+    cache:
+      cachecontrol:
+        max-age: 3600
+    chain:
+      cache: true
+      enabled: true
+      compressed: true
+      html-application-cache: true
+    static-locations: classpath:/static/
   application:
     name: seckill-demo
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     name: defaultDataSource
-
     url: jdbc:mysql://124.220.207.187:3306/seckill?userUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     username: user_seckill
     password: Lsy1234567
@@ -20,17 +43,18 @@ spring:
       connection-test-query: SELECT 1
   thymeleaf:
     cache: false
-  #        check-template: true
-  #        check-template-location: true
-  #        content-type: text/html
-  #        enabled: true
-  #        encoding: UTF-8
-  #        excluded-view-names: ''
-  #        mode: HTML5
-  #        prefix: classpath:/templates/
-  #        suffix: .html
+#    check-template: true
+#    check-template-location: true
+#    content-type: text/html
+#    enabled: true
+#    encoding: UTF-8
+#    excluded-view-names: ''
+#    mode: HTML5
+#    prefix: classpath:/templates/
+#    suffix: .html
   redis:
     host: 124.220.207.187
+#    host: localhost
     port: 6379
     database: 0
     password: Lsy1234567
@@ -38,13 +62,11 @@ spring:
     timeout: 10000ms
     lettuce:
       pool:
-        max-active: 8
+        max-active: 1024
         max-wait: 10000ms
         max-idle: 200
         min-idle: 5
-
-
-
+#    host: localhost
 
 
 mybatis-plus:

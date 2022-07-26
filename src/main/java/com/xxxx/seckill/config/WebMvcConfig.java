@@ -12,9 +12,9 @@ import java.util.List;
 @Configuration
 @EnableWebMvc
 public class WebMvcConfig implements WebMvcConfigurer {
-    private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
-            "classpath:/META-INF/resources/", "classpath:/resources/",
-            "classpath:/static/", "classpath:/public/" };
+//    private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
+//            "classpath:/META-INF/resources/", "classpath:/resources/",
+//            "classpath:/static/", "classpath:/public/" };
 
     @Autowired
     private UserArgumentResolver userArgumentResolver;
@@ -22,14 +22,15 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        if (!registry.hasMappingForPattern("/webjars/**")) {
-            registry.addResourceHandler("/webjars/**").addResourceLocations(
-                    "classpath:/META-INF/resources/webjars/");
-        }
-        if (!registry.hasMappingForPattern("/**")) {
-            registry.addResourceHandler("/**").addResourceLocations(
-                    CLASSPATH_RESOURCE_LOCATIONS);
-        }
+        registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
+//        if (!registry.hasMappingForPattern("/webjars/**")) {
+//            registry.addResourceHandler("/webjars/**").addResourceLocations(
+//                    "classpath:/META-INF/resources/webjars/");
+//        }
+//        if (!registry.hasMappingForPattern("/**")) {
+//            registry.addResourceHandler("/**").addResourceLocations(
+//                    CLASSPATH_RESOURCE_LOCATIONS);
+//        }
     }
 
 

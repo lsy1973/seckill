@@ -3,6 +3,7 @@ package com.xxxx.seckill.pojo;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.context.annotation.Bean;
 
 import java.io.Serializable;
 import java.util.Date;

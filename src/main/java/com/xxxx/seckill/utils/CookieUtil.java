@@ -6,6 +6,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public final class CookieUtil {
     /**
@@ -29,6 +32,7 @@ public final class CookieUtil {
     public static String getCookieValue(HttpServletRequest request, String
             cookieName, boolean isDecoder) {
         Cookie[] cookieList = request.getCookies();
+//        System.out.println("获取的cookie是："+ Arrays.toString(cookieList));
         if (cookieList == null || cookieName == null) {
             return null;
         }
@@ -98,10 +102,14 @@ public final class CookieUtil {
      * 设置Cookie的值 不设置生效时间,但编码
      */
     public static void setCookie(HttpServletRequest request, HttpServletResponse
-            response, String cookieName,
+            response, String cookieName,boolean secure,
                                  String cookieValue, boolean isEncode) {
-        setCookie(request, response, cookieName, cookieValue, -1, isEncode);
+        setCookie(request, response, cookieName, secure,cookieValue, -1, isEncode);
     }
+
+    private static void setCookie(HttpServletRequest request, HttpServletResponse response, String cookieName, boolean secure, String cookieValue, int i, boolean isEncode) {
+    }
+
     /**
      * 设置Cookie的值 在指定时间内生效, 编码参数
      */
@@ -150,9 +158,12 @@ public final class CookieUtil {
                 cookie.setMaxAge(cookieMaxage);
             if (null != request) {// 设置域名的cookie
                 String domainName = getDomainName(request);
-                System.out.println(domainName);
+                System.out.println("当前运行的环境域名为："+domainName);
                 if (!"localhost".equals(domainName)) {
                     cookie.setDomain(domainName);
+//                    cookie.setDomain("124.220.207.187");
+//                }else{
+//                    cookie.setDomain("localhost");
                 }
             }
             cookie.setPath("/");
@@ -220,7 +231,15 @@ public final class CookieUtil {
 // 根据"."进行分割
             final String[] domains = serverName.split("\\.");
             int len = domains.length;
-            if (len > 3) {
+//            if(serverName.length()<=14){
+//                domainName = serverName;
+//            }
+            Pattern pattern = Pattern.compile("[0-9]+.*");
+            Matcher matcher = pattern.matcher((CharSequence) serverName);
+            boolean result = matcher.matches();
+            if(result)
+                domainName=serverName;
+            else if (len > 3) {
 // www.xxx.com.cn
                 domainName = domains[len - 3] + "." + domains[len - 2] + "." +
                         domains[len - 1];
@@ -237,4 +256,6 @@ public final class CookieUtil {
         }
         return domainName;
     }
+
+
 }

@@ -16,6 +16,9 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import static com.xxxx.seckill.utils.CookieUtil.getCookieValue;
+
 @Component
 public class UserArgumentResolver implements HandlerMethodArgumentResolver {
     @Autowired
@@ -32,7 +35,7 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
         HttpServletRequest request = nativeWebRequest.getNativeRequest(HttpServletRequest.class);
         HttpServletResponse response = nativeWebRequest.getNativeResponse(HttpServletResponse.class);
 
-        String ticket = CookieUtil.getCookieValue(request,"userTicket");
+        String ticket = getCookieValue(request,"userTicket");
         if(StringUtils.isEmpty(ticket)){
             return null;
         }
