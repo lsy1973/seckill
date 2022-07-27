@@ -73,6 +73,7 @@
                 orderId: orderId
             },
             success: function (data) {
+                // layer.msg(data)
                 if (data.code == 200) {
                     render(data.obj);
                 } else {

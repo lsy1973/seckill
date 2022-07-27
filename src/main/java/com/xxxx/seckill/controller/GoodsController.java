@@ -44,7 +44,6 @@ public class GoodsController {
     @Autowired
     private RedisTemplate redisTemplate;
 
-
     @Autowired
     private ThymeleafViewResolver thymeleafViewResolver;
 
@@ -144,7 +143,7 @@ public class GoodsController {
 //        model.addAttribute("user", user);
 //        System.out.println("传入进来toDetail的user为:"+user);
         GoodsVo goods = goodsService.findGoodsVoByGoodsId(goodsId);
-        model.addAttribute("goods", goods);
+//        model.addAttribute("goods", goods);
         Date startDate = goods.getStartDate();
         Date endDate = goods.getEndDate();
         Date nowDate = new Date();

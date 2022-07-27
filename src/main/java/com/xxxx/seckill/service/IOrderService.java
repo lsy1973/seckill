@@ -18,5 +18,8 @@ public interface IOrderService extends IService<Order> {
     Order seckill(User user, GoodsVo goods);
 
     OrderDetailVo getDetail(Long orderId);
-
+    //校验秒杀地址
+    boolean checkPath(User user, Long goodsId, String path);
+    //校验验证码
+    boolean checkCaptcha(User user, Long goodsId, String captcha);
 }
