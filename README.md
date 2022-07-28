@@ -4,13 +4,13 @@
 - 集成Thymeleaf,RespBean
 - MyBatis
 2. 分布式会话
-   - 用户登录
-     - 设计数据库
-     - 明文密码二次MD5加密
-     - 参数校验+全局异常处理
-   - 共享Session
-     - SpringSession
-     - Redis
+- 用户登录
+  - 设计数据库
+  - 明文密码二次MD5加密
+  - 参数校验+全局异常处理
+- 共享Session
+  - SpringSession
+  - Redis
 
 3. 功能开发
 - 商品列表
@@ -37,15 +37,21 @@
 - 内存标记减少Redis的访问
 - RabbitMQ异步下单
   - SpringBoot整合RabbitMQ
-  - 交换机
   
 7. 安全优化
 - 秒杀接口地址隐藏
 - 算术验证码
+- 接口限流，使用ThreadLocal保证线程安全
+
+## 使用说明
+登录页面：http://localhost:8080/login/toLogin
+
+登录之后，每个用户只能秒杀一件商品，暂时没有实现支付功能
+
+代码生成器：https://gitee.com/guizhizhe/code-generator.git
 
 
-## 遇到的问题
-
+## 坑
 
 1. 在本地测试正常，但是部署到服务器时，登录之后，页面中的user信息无法传递
 经过排查，发现是部署在服务器上时，登陆时不生成cookie
