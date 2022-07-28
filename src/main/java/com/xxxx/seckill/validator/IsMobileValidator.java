@@ -1,4 +1,4 @@
-package com.xxxx.seckill.vo;
+package com.xxxx.seckill.validator;
 
 import com.xxxx.seckill.utils.ValidatorUtil;
 import com.xxxx.seckill.validator.IsMobile;

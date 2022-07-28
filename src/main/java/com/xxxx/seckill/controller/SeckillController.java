@@ -3,10 +3,9 @@ package com.xxxx.seckill.controller;
 
 
 import com.wf.captcha.ArithmeticCaptcha;
+import com.xxxx.seckill.config.AccessLimit;
 import com.xxxx.seckill.exception.GlobalException;
-import com.xxxx.seckill.pojo.Order;
 import com.xxxx.seckill.pojo.SeckillMessage;
-import com.xxxx.seckill.pojo.SeckillOrders;
 import com.xxxx.seckill.pojo.User;
 import com.xxxx.seckill.rabbitmq.MQSender;
 import com.xxxx.seckill.service.IGoodsService;
@@ -19,11 +18,9 @@ import com.xxxx.seckill.vo.RespBeanEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.rsocket.context.LocalRSocketServerPort;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
@@ -66,6 +64,11 @@ public class SeckillController implements InitializingBean {
         if (user == null) {
             return RespBean.error(RespBeanEnum.SESSION_ERROR);
         }
+        ValueOperations valueOperations = redisTemplate.opsForValue();
+        //判断秒杀路径是否存在
+        boolean check = orderService.checkPath(user,goodsId,path);
+        if(!check){
+            return RespBean.error(RespBeanEnum.PATH_ERROR);
 //        model.addAttribute("user", user);
 //        GoodsVo goods = goodsService.findGoodsVoByGoodsId(goodsId);
 //判断库存
@@ -101,12 +104,6 @@ public class SeckillController implements InitializingBean {
 ////        JSONObject parse = (JSONObject) JSON.parse(authTbAccountsByBd.getValue());
 ////        sender.send(JSONObject.toJSONString(seckillMessage));
 //        return RespBean.success(RespBean.success(order));
-
-        ValueOperations valueOperations = redisTemplate.opsForValue();
-        //判断秒杀路径是否存在
-        boolean check = orderService.checkPath(user,goodsId,path);
-        if(!check){
-            return RespBean.error(RespBeanEnum.PATH_ERROR);
         }
 
 
@@ -137,22 +134,42 @@ public class SeckillController implements InitializingBean {
     @RequestMapping(value = "/result", method = RequestMethod.GET)
     @ResponseBody
     public RespBean getResult(User user, Long goodsId) {
-        System.out.println("user:" + user );
-        System.out.println("goodsId:" + goodsId);
+//        System.out.println("user:" + user );
+//        System.out.println("goodsId:" + goodsId);
         if (user == null) {
             return RespBean.error(RespBeanEnum.SESSION_ERROR);
         }
         Long orderId = seckillOrderService.getResult(user, goodsId);
-        System.out.println("result返回jieguo" + orderId);
+//        System.out.println("result返回jieguo" + orderId);
         return RespBean.success(orderId);
     }
 
+    @AccessLimit(second=5,maxCount=5,needLogin=true)
     @RequestMapping(value = "/path",method = RequestMethod.GET)
     @ResponseBody
-    public RespBean getPath(User user, Long goodsId,String captcha) {
+    public RespBean getPath(User user, Long goodsId, String captcha, HttpServletRequest request) {
         if (user == null) {
             return RespBean.error(RespBeanEnum.SESSION_ERROR);
         }
+
+//        ValueOperations valueOperations = redisTemplate.opsForValue();
+        //限制同一个用户访问次数
+        //测试，暂时把captcha设置为0
+//        captcha = "0";
+//        String uri = request.getRequestURI();
+//        String key = uri + ":" + user.getId();
+//        Integer count = (Integer) valueOperations.get(key);
+//        if(count==null){
+//            valueOperations.set(key,1L,5, TimeUnit.SECONDS);
+//        }else if(count<5){
+//            valueOperations.increment(key);
+//        }else{
+//            return RespBean.error(RespBeanEnum.ACCESS_LIMIT_REACHED);
+//        }
+
+        //限制同一个用户访问间隔时间
+
+
         //校验验证码
         boolean check = orderService.checkCaptcha(user,goodsId,captcha);
         if(!check){

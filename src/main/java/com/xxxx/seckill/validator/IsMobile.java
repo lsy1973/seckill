@@ -1,8 +1,6 @@
 package com.xxxx.seckill.validator;
 
 
-import com.xxxx.seckill.vo.IsMobileValidator;
-
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;
