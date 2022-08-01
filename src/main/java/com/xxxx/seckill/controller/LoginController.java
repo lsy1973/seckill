@@ -35,4 +35,14 @@ public class LoginController {
 //        return null;
         return userService.login(request,response,loginVo);
     }
+
+    @RequestMapping("/register")
+    @ResponseBody
+    public RespBean getAccount(HttpServletRequest request, HttpServletResponse response,@Valid LoginVo loginVo){
+
+
+        return userService.register(request,response,loginVo);
+    }
+
+
 }

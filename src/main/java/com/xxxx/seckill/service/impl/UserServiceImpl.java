@@ -12,14 +12,19 @@ import com.xxxx.seckill.vo.LoginVo;
 import com.xxxx.seckill.vo.RespBean;
 import com.xxxx.seckill.vo.RespBeanEnum;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
+
 
 /**
  * <p>
@@ -107,6 +112,50 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         }
         return RespBean.error(RespBeanEnum.PASSWORD_UPDATE_FAIL);
 
+    }
+
+    @Override
+    public RespBean register(HttpServletRequest request, HttpServletResponse response, LoginVo loginVo) {
+
+        String mobile = loginVo.getMobile();
+
+        String password = loginVo.getPassword();
+        System.out.println("注册的手机号码是：" + mobile);
+        System.out.println("注册的密码是：" + password);
+        String salt = "1a2b3c";
+        password = MD5Util.formPassToDBPass(password, salt);
+        User user = new User();
+        user.setId(Long.valueOf(mobile));
+        user.setNickname("user_"+mobile);
+        user.setPassword(password);
+        user.setSlat(salt);
+        user.setRegisterDate(new Date());
+        System.out.println("注册的用户信息：" + user);
+        if(userMapper.selectById(mobile)!=null){
+            throw new GlobalException(RespBeanEnum.REGISTER_FAIL);
+        }
+
+
+
+
+
+        int result = userMapper.insert(user);
+        /*添加commit*/
+
+        System.out.println("插入的结果是：" + result);
+
+
+        if (1 == result) {
+            String ticket = UUIDUtil.uuid();
+            System.out.println("生成的ticket是："+ticket);
+//        request.getSession().setAttribute(ticket,user);
+            //把用户数据存入redis,key="user:"+ticket,value=user
+            redisTemplate.opsForValue().set("user:" + ticket, user);
+            CookieUtil.setCookie(request, response, "userTicket", ticket);
+            return RespBean.success();
+        }
+        System.out.println("注册失败！");
+        throw new GlobalException(RespBeanEnum.REGISTER_FAIL);
     }
 }
 //    public void setCookie(HttpServletRequest request, HttpServletResponse response, String key, String value) {

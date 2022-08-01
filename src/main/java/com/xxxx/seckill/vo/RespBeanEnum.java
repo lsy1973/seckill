@@ -27,7 +27,8 @@ public enum RespBeanEnum {
     PATH_ERROR(500214,"路径错误" ),
     REQUEST_ILLEGAL(500215,"请求非法" ),
     CAPTCHA_ERROR(200216, "验证码错误"),
-    ACCESS_LIMIT_REACHED(500504,"访问过于频繁，请稍后再试" );
+    ACCESS_LIMIT_REACHED(500504,"访问过于频繁，请稍后再试" ),
+    REGISTER_FAIL(200213,"注册失败，请检查输入" );
 
     private final Integer code;
     private final String message;
