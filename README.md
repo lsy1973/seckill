@@ -44,7 +44,10 @@
 - 接口限流，使用ThreadLocal保证线程安全
 
 ## 使用说明
-登录页面：http://localhost:8080/login/toLogin
+
+服务器部署 登录页面：http://124.220.207.187:15327/login/toLogin
+
+本地 登录页面：http://localhost:8080/login/toLogin
 
 登录之后，每个用户只能秒杀一件商品，暂时没有实现支付功能
 
@@ -79,4 +82,3 @@ boolean result = matcher.matches();
 if(result)
 domainName=serverName;
 ```
-

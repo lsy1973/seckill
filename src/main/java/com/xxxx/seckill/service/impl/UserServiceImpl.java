@@ -158,11 +158,4 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         throw new GlobalException(RespBeanEnum.REGISTER_FAIL);
     }
 }
-//    public void setCookie(HttpServletRequest request, HttpServletResponse response, String key, String value) {
-//        Cookie cookie = new Cookie(key, value);// 创建一个cookie，cookie的名字是key
-//        cookie.setDomain(request.getServerName());
-//        cookie.setPath(request.getContextPath()); // 设置Cookie的有效期
-//        cookie.setMaxAge(-1); //
-//        cookie.setHttpOnly(false); // 将cookie对象添加到response对象中，这样服务器在输出response对象中的内容时就会把cookie也输出到客户端浏览器
-//        response.addCookie(cookie); }
-//    }
+

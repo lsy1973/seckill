@@ -59,8 +59,8 @@
                     onclick="login()">登录</button>
         </div>
         <div class="col-md-5">
-            <button class="btn btn-primary btn-block" type="submit"
-                    onclick="register()">注册</button>
+            <button class="btn btn-primary btn-block" type="button"
+                    onclick="doRegister()">注册</button>
         </div>
     </div>
 </form>
@@ -78,13 +78,14 @@
 
 
 
-    function register() {
-        $("#loginForm").validate({
-            submitHandler: function (form) {
-                doRegister()
-            }
-        });
-    }
+    // function register() {
+    //     // doRegister;
+    //     $("#loginForm").validate({
+    //         submitHandler: function () {
+    //             doRegister();
+    //         }
+    //     });
+    // }
 
     function doRegister(){
         g_showLoading();
@@ -106,9 +107,7 @@
                     layer.msg("注册成功，跳转商品详情页");
                     window.location.href = "/goods/toList";
                 } else {
-                    alert("注册失败，用户名必须为手机号码，密码必须为6-16位，或者用户名已存在");
-                    //test1();
-                    // layer.msg(data.message);
+                    layer.msg(data.message);
                 }
             },
             error: function () {
@@ -116,14 +115,6 @@
             }
         });
     }
-
-
-
-
-
-
-
-
 
     function login() {
         $("#loginForm").validate({
@@ -159,55 +150,6 @@
                 layer.closeAll();
             }
         });
-    }
-</script>
-
-<script type="text/javascript">
-    function displayAlert(type, data, time){
-
-        var lunbo=document.createElement("div");
-
-        if(type == "success") {
-            lunbo.style.backgroundColor = "#009900";
-        } else if(type == "error") {
-            lunbo.style.backgroundColor = "#990000";
-        } else if(type == "info") {
-            lunbo.style.backgroundColor = " #e6b800";
-        } else {
-            console.log("入参type错误");
-            return;
-        }
-
-        lunbo.id="lunbo";
-        lunbo.style.position = "absolute";
-        lunbo.style.width = "200px";
-        lunbo.style.height = "60px";
-        lunbo.style.marginLeft = "-100px";
-        lunbo.style.marginTop = "-30px";
-        lunbo.style.left = "90%";
-        lunbo.style.top = "15%";
-        lunbo.style.color = "white";
-        lunbo.style.fontSize = "25px";
-        lunbo.style.borderRadius = "20px";
-        lunbo.style.textAlign="center";
-        lunbo.style.lineHeight="60px";
-
-        if(document.getElementById("lunbo")==null){
-            document.body.appendChild(lunbo);
-            lunbo.innerHTML=data;
-            setTimeout(function(){
-                document.body.removeChild(lunbo);
-            } ,time);
-        }
-    }
-    function test0() {
-        displayAlert("success", "success TEST", 1500);
-    }
-    function test1() {
-        displayAlert("error", "error TEST", 1500);
-    }
-    function test2() {
-        displayAlert("info", "info TEST", 1500);
     }
 </script>
 </html>
